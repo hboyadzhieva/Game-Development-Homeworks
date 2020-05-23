@@ -5,12 +5,13 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    public int health;
+    private int health;
     private Counter counter;
-
+    
     void Start() {
         counter = gameObject.GetComponent<Counter>();
-        health = counter.MAX - 1;
+        health = counter.MAX - 1;  
+        
         ZombieShootController.onZombieHitsPlayer += takeDamage;
         counter.setCountNumber(health);
     }

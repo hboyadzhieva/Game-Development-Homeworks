@@ -17,25 +17,28 @@ public class Counter : MonoBehaviour
     private RawImage imageOnes;
     private RawImage imageTens;
     private RawImage imageHundreds;
+    private Transform objTransform;
+
+    private void Start()
+    {
+        objTransform = this.transform;
+        imageOnes = objTransform.Find("DigitOnes").gameObject.GetComponent<RawImage>();
+        imageTens = objTransform.Find("DigitTens").gameObject.GetComponent<RawImage>();
+        imageHundreds = objTransform.Find("DigitHundreds").gameObject.GetComponent<RawImage>();
+    }
 
     public void setCountNumber(int number) {
         if (number >= 100) {
-            if (imageOnes == null) imageOnes = Instantiate(prefabDigit,transform);
-            if (imageTens == null) imageTens = Instantiate(prefabDigit, transform);
-            if (imageHundreds == null) imageHundreds = Instantiate(prefabDigit, transform);
+            imageHundreds.enabled = true; imageTens.enabled = true; imageOnes.enabled = true;
             imageOnes.texture = countTextures[number % 10];
             imageTens.texture = countTextures[(number / 10) % 10];
             imageHundreds.texture = countTextures[number / 100];
         } else if (number >= 10) {
-            if (imageOnes == null) imageOnes = Instantiate(prefabDigit, new Vector3(0, 0, 0), Quaternion.identity);
-            if (imageTens == null) imageTens = Instantiate(prefabDigit, transform);
-            if (imageHundreds != null) Destroy(imageHundreds);
+            imageHundreds.enabled = false; imageTens.enabled = true; imageOnes.enabled = true;
             imageOnes.texture = countTextures[number % 10];
             imageTens.texture = countTextures[number / 10];
         } else if (number >= 0) {
-            if (imageOnes == null) imageOnes = Instantiate(prefabDigit, transform);
-            if (imageTens != null) Destroy(imageTens);
-            if (imageHundreds != null) Destroy(imageHundreds);
+            imageHundreds.enabled = false; imageTens.enabled = false; imageOnes.enabled = true;
             imageOnes.texture = countTextures[number];
         }
 
